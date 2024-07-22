@@ -18,6 +18,7 @@ class ArticleSeeder extends Seeder
     {
 
 
+
         for($i = 0 ; $i < 50 ; $i ++){
             DB::table('articles')->insert([
                'category_id'=>rand(1,7),
