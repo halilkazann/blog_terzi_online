@@ -79,7 +79,7 @@ class Homepage extends Controller
 
       $rules = [
           'name'=>'required|min:5',
-          'email'=>'required|mail',
+          'email'=>'required|email',
           'phone'=>'required|min:10|max:11',
           'message'=>'required|min:10'
       ];
