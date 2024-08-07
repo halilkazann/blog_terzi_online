@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-info">
 
 <div class="container">
 
@@ -45,6 +45,13 @@
 
                                 <form class="user" method="post" action="{{route('admin.login.post')}}">
                                     @csrf
+                                    @if($errors->any())
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first() }}
+                                        </div>
+
+
+                                    @endif
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" name="email"
                                                id="exampleInputEmail" aria-describedby="emailHelp"

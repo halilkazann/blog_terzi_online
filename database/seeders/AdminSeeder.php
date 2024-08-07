@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use Faker\Generator;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
 
 class AdminSeeder extends Seeder
 {

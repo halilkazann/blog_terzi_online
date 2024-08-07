@@ -20,9 +20,16 @@ class AuthController extends Controller
 
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            return 'Halil Kazan';
+            return redirect()->route('admin.panel');
         }
-
+        return redirect()->route('admin.login')->withErrors('Email adresi veya şifre hatalı!');
 
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('admin.login');
+    }
+
 }

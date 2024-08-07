@@ -3,15 +3,19 @@
 use App\Http\Controllers\Back\Dashboard;
 use App\Http\Controllers\Back\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\isAdmin;
+
+
 
 
 // Backend Routes //
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->middleware('isAdmin')->group(function (){
     Route::get('/panel',[Dashboard::class,'index'])->name('admin.panel');
-    Route::get('/giris',[AuthController::class,'login'])->name('admin.login');
-    Route::post('/giris',[AuthController::class,'loginPost'])->name('admin.login.post');
+    Route::get('/cikis',[AuthController::class,'logout'])->name('admin.logout');
 });
 
+Route::get('/admin/giris',[AuthController::class,'login'])->name('admin.login');
+Route::post('/admin/giris',[AuthController::class,'loginPost'])->name('admin.login.post');
 
 // Front Routes //
 
