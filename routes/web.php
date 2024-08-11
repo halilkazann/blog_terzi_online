@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Back\Dashboard;
 use App\Http\Controllers\Back\AuthController;
+use App\Http\Controllers\Back\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isAdmin;
 
@@ -9,13 +10,24 @@ use App\Http\Middleware\isAdmin;
 
 
 // Backend Routes //
-Route::prefix('admin')->middleware('isAdmin')->group(function (){
-    Route::get('/panel',[Dashboard::class,'index'])->name('admin.panel');
+Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/cikis',[AuthController::class,'logout'])->name('admin.logout');
+    Route::get('/panel',[Dashboard::class,'index'])->name('admin.panel');
+    Route::resource('makaleler',ArticleController::class);
 });
 
-Route::get('/admin/giris',[AuthController::class,'login'])->name('admin.login');
-Route::post('/admin/giris',[AuthController::class,'loginPost'])->name('admin.login.post');
+
+Route::prefix('/admin')->middleware('islogin')->group(function (){
+    Route::get('/giris',[AuthController::class,'login'])->name('admin.login');
+    Route::post('/giris',[AuthController::class,'loginPost'])->name('admin.login.post');
+
+});
+
+
+
+
+
+
 
 // Front Routes //
 

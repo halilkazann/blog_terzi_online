@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
 
@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>@yield('title','Blog - Admin Panel')</title>
-
+    @yield('css')
     <!-- Custom fonts for this template-->
     <link href="{{asset('backend')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -19,5 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('backend')}}/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{asset('backend')}}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
+
+

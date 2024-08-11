@@ -28,7 +28,9 @@ class AuthController extends Controller
 
     public function logout()
     {
+
         Auth::logout();
+        toastr()->success("Hoşgeldin" . Auth::user()->name);
         return redirect()->route('admin.login');
     }
 
