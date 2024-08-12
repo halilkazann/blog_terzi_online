@@ -10,6 +10,7 @@ class AuthController extends Controller
 {
     public function login()
     {
+
         return view('backend.auth.login');
     }
 
@@ -20,8 +21,10 @@ class AuthController extends Controller
 
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            toastr()->success("Hoşgeldin");
             return redirect()->route('admin.panel');
         }
+
         return redirect()->route('admin.login')->withErrors('Email adresi veya şifre hatalı!');
 
     }
@@ -30,7 +33,7 @@ class AuthController extends Controller
     {
 
         Auth::logout();
-        toastr()->success("Hoşgeldin" . Auth::user()->name);
+
         return redirect()->route('admin.login');
     }
 

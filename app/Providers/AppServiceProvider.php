@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Route::resourceVerbs([
             'create' => 'olustur',
+            'edit' => 'guncelle',
         ]);
     }
 }

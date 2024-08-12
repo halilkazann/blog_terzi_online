@@ -42,7 +42,7 @@ class ArticleController extends Controller
         $article = new Article();
         $article->title = $request->title;
         $article->category_id = $request->category;
-        $article->content = $request->content;
+        $article->content = $request->contentText;
         $article->slug = Str::slug($request->title);
 
         if ($request->hasFile('image')){
@@ -69,7 +69,11 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       $article = Article::query()->findOrFail($id);
+
+
+       $categorys = Category::query()->get();
+       return view('backend.articles.update',compact('article','categorys'));
     }
 
     /**
@@ -77,7 +81,29 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $request->validate([
+            'title'=>'min:3',
+            'image'=>'image|mimes:jpeg,jpg,png|max:2048'
+        ]);
+
+
+        $article = Article::query()->findOrFail($id);
+        $article->title = $request->title;
+        $article->category_id = $request->category;
+        $article->content = $request->contentText;
+        $article->slug = Str::slug($request->title);
+
+        if ($request->hasFile('image')){
+            $imageName = Str::slug($request->title).'.'.$request->image->getClientOriginalExtension();
+            $request->image->move(public_path('uploads'),$imageName);
+            $article->image = 'uploads/'.$imageName;
+        }
+
+        $article->save();
+        toastr()->success('Güncelleme İşlemi Başarılı');
+        return redirect()->route('makaleler.index');
+
     }
 
     /**
