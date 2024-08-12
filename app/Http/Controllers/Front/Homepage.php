@@ -29,7 +29,7 @@ class Homepage extends Controller
     }
     public function index()
     {
-        $data['articles'] = Article::query()->paginate(2);
+        $data['articles'] = Article::query()->paginate(3);
 
         $data['categories'] = Category::all();
 

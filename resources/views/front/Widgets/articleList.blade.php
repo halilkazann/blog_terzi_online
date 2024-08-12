@@ -1,4 +1,6 @@
 @foreach($articles as $article)
+@if($article->status==1)
+
 
     <div class="post-preview">
         <a href="{{route('singleContent',[$article->getCategory->slug,$article->slug])}}">
@@ -14,6 +16,7 @@
     @if(!$loop->last)
         <hr>
     @endif
+@endif
 @endforeach
 
 {{$articles->links('pagination::bootstrap-4')}}

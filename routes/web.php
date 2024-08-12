@@ -14,6 +14,8 @@ Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/cikis',[AuthController::class,'logout'])->name('admin.logout');
     Route::get('/panel',[Dashboard::class,'index'])->name('admin.panel');
     Route::resource('/makaleler',ArticleController::class);
+    Route::get('/switch',[ArticleController::class,'switch'])->name('admin.switch');
+
 });
 
 

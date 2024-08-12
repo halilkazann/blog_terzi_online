@@ -106,11 +106,25 @@ class ArticleController extends Controller
 
     }
 
+    public function switch(Request $request)
+    {
+        $id = $request->id;
+
+        $article = Article::query()->findOrFail($id);
+        $article->status = $request->statu =="true" ? 1 : 0 ;
+        $article->save();
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $article = Article::query()->where('id',$id)->delete();
+        $article->save();
+        toastr()->primary('Makale Silme İşlemi Başarılı');
+        return redirect()->route('makaleler.index');
+
     }
 }
