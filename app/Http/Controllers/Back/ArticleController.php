@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\File;
 class ArticleController extends Controller
 {
     /**
@@ -116,15 +116,51 @@ class ArticleController extends Controller
 
     }
 
+    public function delete($id)
+    {
+
+        $article = Article::query()->where('id',$id)->delete();
+        toastr()->info('Makale Silme İşlemi Başarılı');
+        return redirect()->route('makaleler.index');
+    }
+    public function hardDelete($id)
+    {
+        $articles = Article::onlyTrashed()->find($id);
+
+
+       if (File::exists($articles->image)) {
+           File::delete(public_path($articles->image));
+       }
+
+        $article = Article::query()->where('id',$id)->forceDelete();
+        toastr()->error('Makale Kalıcı olarak silinmiştir');
+        return redirect()->route('admin.article.trash');
+    }
+
+
+
     /**
      * Remove the specified resource from storage.
      */
+    public function trash()
+    {
+        $articles = Article::onlyTrashed()->orderBy('deleted_at','desc')->get();
+        return view('backend.articles.trash',compact('articles'));
+
+    }
+    public function recycle(string $id)
+    {
+
+
+        Article::onlyTrashed()->find($id)->restore();
+        toastr()->success('Makale arşivden çıkarıldı.');
+        return redirect()->route('admin.article.trash');
+
+    }
+
     public function destroy(string $id)
     {
-        $article = Article::query()->where('id',$id)->delete();
-        $article->save();
-        toastr()->primary('Makale Silme İşlemi Başarılı');
-        return redirect()->route('makaleler.index');
+
 
     }
 }

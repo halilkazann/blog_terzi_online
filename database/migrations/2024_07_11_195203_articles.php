@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('hit')->default(0);
             $table->string('slug');
             $table->boolean('status')->default(0);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');

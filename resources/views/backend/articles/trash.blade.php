@@ -5,8 +5,8 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold float-right text-primary"><span>{{$articles->count()}} makale bulundu. </span>
-                <a href="{{route('admin.article.trash')}}" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm text-black-50">
-                    <i class="fas fa-recycle fa-sm text-black-50"></i> Arşiv</a></h6>
+                <a href="{{route('makaleler.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm text-white-50">
+                    <i class="fas fa-heart fa-sm text-white-50"></i> Yayındakiler</a></h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -17,8 +17,7 @@
                         <th>Başlık</th>
                         <th>Kategori</th>
                         <th>Hit</th>
-                        <th>Oluşturulma Tarihi</th>
-                        <th>Durum</th>
+                        <th>Silinme Tarihi</th>
                         <th>İşlemler</th>
                     </tr>
                     </thead>
@@ -30,16 +29,11 @@
                             <td>{{$article->title}}</td>
                             <td>{{$article->getCategory->name}}</td>
                             <td>{{$article->hit}}</td>
-                            <td>{{$article->created_at}}</td>
-                            <td>
-                                <div class="form-check form-switch">
-                                    <input type="checkbox" class="switch" article-id="{{$article->id}}" data-toggle="toggle" data-onstyle="success" data-on="Aktif" @if($article->status==1) checked @endif  data-offstyle="danger"  data-off="Pasif"     data-width="80" data-size="normal">
-                                </div>
-                            </td>
+                            <td>{{$article->deleted_at}}</td>
+
                             <td style="white-space: nowrap">
-                                <a href="#" title="Görüntüle" class="btn btn-sm btn-success"><i class="fa fa-eye"></i></a>
-                                <a href="{{route('makaleler.edit',$article->id)}}" title="Düzenle" class="btn btn-sm btn-primary"><i class="fa fa-pen"></i></a>
-                                <a href="{{route('admin.article.delete',$article->id)}}" title="Sil" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
+                                <a href="{{route('admin.article.harddelete',$article->id)}}" title="Sil" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="{{route('admin.article.recycle',$article->id)}}" title="Arşivden Çıkar" class="btn btn-sm btn-success"><i class="fa fa-arrow-up"></i></a>
                             </td>
                         </tr>
 
@@ -57,11 +51,11 @@
     <script>
         $(function() {
             $('.switch').change(function() {
-              id = $(this)[0].getAttribute('article-id');
-              statu = $(this).prop('checked');
-              $.get("{{route('admin.switch')}}",{id:id,statu:statu}, function (data,status){
-                  console.log(status);
-              })
+                id = $(this)[0].getAttribute('article-id');
+                statu = $(this).prop('checked');
+                $.get("{{route('admin.switch')}}",{id:id,statu:statu}, function (data,status){
+                    console.log(status);
+                })
             })
         })
     </script>

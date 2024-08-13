@@ -6,7 +6,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>@yield('title','Blog Sitesi')</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('front')}}/assets/favicon.ico" />
+
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
