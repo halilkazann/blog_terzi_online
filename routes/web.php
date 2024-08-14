@@ -3,6 +3,7 @@
 use App\Http\Controllers\Back\Dashboard;
 use App\Http\Controllers\Back\AuthController;
 use App\Http\Controllers\Back\ArticleController;
+use App\Http\Controllers\Back\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isAdmin;
 
@@ -18,6 +19,11 @@ Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/harddeletearticle/{id}',[ArticleController::class,'hardDelete'])->name('admin.article.harddelete');
     Route::get('/trash',[ArticleController::class,'trash'])->name('admin.article.trash');
     Route::get('/recycle/{id}',[ArticleController::class,'recycle'])->name('admin.article.recycle');
+
+
+    Route::get('/kategoriler',[CategoryController::class,'index'])->name('admin.category.index');
+    Route::post('/kategoriler/ekle',[CategoryController::class,'create'])->name('admin.category.create');
+    Route::get('/kategori/status',[CategoryController::class,'switch'])->name('admin.category.switch');
 
 });
 
