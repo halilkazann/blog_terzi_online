@@ -23,6 +23,13 @@ class CategoryController extends Controller
         $category->save();
     }
 
+    public function getData(Request $request)
+    {
+        $id = $request->id;
+        $category = Category::query()->findOrFail($id);
+        return response()->json($category);
+    }
+
     public function create(Request $request)
     {
         $isExist = Category::whereSlug(Str::slug($request->category))->first();

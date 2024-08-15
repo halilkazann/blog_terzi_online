@@ -24,6 +24,7 @@ Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/kategoriler',[CategoryController::class,'index'])->name('admin.category.index');
     Route::post('/kategoriler/ekle',[CategoryController::class,'create'])->name('admin.category.create');
     Route::get('/kategori/status',[CategoryController::class,'switch'])->name('admin.category.switch');
+    Route::get('/kategori/getData',[CategoryController::class,'getData'])->name('admin.category.getdata');
 
 });
 
