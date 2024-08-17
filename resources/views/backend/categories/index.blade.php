@@ -48,11 +48,19 @@
 
                                     <td>
                                         <div class="form-check form-switch">
-                                            <input type="checkbox" class="switch" category-id="{{$category->id}}" data-toggle="toggle" data-onstyle="success" data-on="Aktif" @if($category->status==1) checked @endif  data-offstyle="danger"  data-off="Pasif"     data-width="80" data-size="normal">
+                                            <input type="checkbox" class="switch" category-id="{{$category->id}}"
+                                                   data-toggle="toggle" data-onstyle="success" data-on="Aktif"
+                                                   @if($category->status==1) checked @endif  data-offstyle="danger"
+                                                   data-off="Pasif" data-width="80" data-size="normal">
                                         </div>
                                     </td>
                                     <td style="white-space: nowrap">
-                                        <a category-id="{{$category->id}}" class="btn btn-sm btn-primary edit-click" title="Kategoriyi Düzenle" data-toggle="modal" data-target="#exampleModal" ><i class="fa fa-edit text-white"></i> </a>
+                                        <a category-id="{{$category->id}}" class="btn btn-sm btn-primary edit-click"
+                                           title="Kategoriyi Düzenle" data-toggle="modal" data-target="#exampleModal"><i
+                                                class="fa fa-edit text-white"></i> </a>
+                                        <a category-id="{{$category->id}}" class="btn btn-sm btn-danger delete-click"
+                                           title="Sil" data-toggle="modal" data-target="#exampleModal2"><i
+                                                class="fa fa-times text-white"></i></a>
                                     </td>
                                 </tr>
 
@@ -67,13 +75,42 @@
 
     </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Kategori Düzenle
-    </button>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal2LabelLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModal2Label">Kategori Sil</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{{route('admin.category.delete')}}">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <span>Kategoriyi silmek istediğine emin misin?</span>
+                            <input id="delete_category_id" type="hidden" class="form-control" name="id">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -82,46 +119,70 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
-                    <button type="button" class="btn btn-primary">Güncelle</button>
-                </div>
+                <form method="post" action="{{route('admin.category.update')}}">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label> Kategori Adı</label>
+                            <input id="category" type="text" class="form-control" name="category">
+                            <input id="category_id" type="hidden" class="form-control" name="id">
+                        </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input id="slug" type="text" class="form-control" name="slug">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-primary">Güncelle</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 @endsection
 
 @section('js')
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
     <script>
+        $(document).ready(function () {
+            // Düzenleme tıklama olayını işleyin
+            $('.edit-click').click(function () {
+                var id = $(this).attr('category-id'); // ID'yi almak için jQuery metodu kullanın
 
-        $(function() {
-
-            $('.edit-click').click(function (){
-                id = $(this)[0].getAttribute('category-id');
                 $.ajax({
-                    type:'GET',
-                    url:'{{route('admin.category.getdata')}}',
-                    data:{id:id},
-                    success:function (data){
-                        console.log(data);
+                    type: 'GET',
+                    url: '{{ route('admin.category.getdata') }}', // URL'yi Blade'den dinamik olarak alın
+                    data: {id: id},
+                    success: function (data) {
+                        $('#category').val(data.name);
+                        $('#slug').val(data.slug);
+                        $('#category_id').val(data.id);
+                        $('#editModal').modal('show'); // Modal'ı göster
                     }
+                });
+            });
 
-                })
-            })
+            $('.delete-click').click(function () {
+                var id = $(this).attr('category-id'); // ID'yi almak için jQuery metodu kullanın
+                $('#delete_category_id').val(id)
+                $('#deleteModal').modal('show'); // Modal'ı göster
+            });
 
-            $('.switch').change(function() {
-                id = $(this)[0].getAttribute('category-id');
-                statu = $(this).prop('checked');
-                $.get("{{route('admin.category.switch')}}",{id:id,statu:statu}, function (data,status){
+            // Switch değişimini işleyin
+            $('.switch').change(function () {
+                var id = $(this).attr('category-id');
+                var statu = $(this).prop('checked');
+                $.get("{{ route('admin.category.switch') }}", {id: id, statu: statu}, function (data, status) {
                     console.log(status);
-                })
-            })
-        })
+                }).fail(function (xhr, status, error) {
+                    console.error('AJAX isteğinde hata oluştu:', status, error);
+                });
+            });
+
+            $('#dataTable').dataTable();
+        });
+
     </script>
 
 @endsection

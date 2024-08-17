@@ -30,6 +30,41 @@ class CategoryController extends Controller
         return response()->json($category);
     }
 
+    public function delete(Request $request)
+    {
+        $category = Category::query()->find($request->id);
+
+        if (is_null($category)){
+            flash()->error('Böyle bir kategori sistemde bulunmaktadır.');
+        }else{
+            $deleted = $category->delete();
+            if ($deleted){
+                flash()->success('Kategori başarıyla silindi.');
+            }else{
+                flash()->error('Kategori silinirken hata oluştu.');
+            }
+        }
+
+        return redirect()->back();
+
+    }
+
+    public function update(Request $request)
+    {
+        $isSlug = Category::whereSlug(Str::slug($request->slug))->whereNotIn('id',[$request->id])->first();
+        $isName = Category::whereName($request->category)->whereNotIn('id',[$request->id])->first();
+        if ($isSlug or $isName ){
+            flash()->error($request->category . 'Aynı isimde/linkte kategori sistemde bulunmaktadır.');
+            return redirect()->route('admin.category.index');
+        }
+
+        $category = Category::query()->find($request->id);
+        $category->name = $request->category;
+        $category->slug = STR::slug($request->slug);
+        $category->save();
+        flash()->success('Kategori güncelleme İşlemi Başarılı');
+        return redirect()->back();
+    }
     public function create(Request $request)
     {
         $isExist = Category::whereSlug(Str::slug($request->category))->first();
