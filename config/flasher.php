@@ -59,7 +59,7 @@ return [
         ],
         'deleted' => [
             'type' => 'warning',
-            'message' => ':value Kayıt Başarıyla Silindi!',
+            'message' => ':value kaydı başarıyla silindi!',
             'title' => 'Başarılı',
         ],
         'not_found' => [

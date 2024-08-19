@@ -4,6 +4,7 @@ use App\Http\Controllers\Back\Dashboard;
 use App\Http\Controllers\Back\AuthController;
 use App\Http\Controllers\Back\ArticleController;
 use App\Http\Controllers\Back\CategoryController;
+use App\Http\Controllers\Back\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\isAdmin;
 
@@ -21,6 +22,8 @@ Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/harddeletearticle/{id}',[ArticleController::class,'hardDelete'])->name('admin.article.harddelete');
     Route::get('/trash',[ArticleController::class,'trash'])->name('admin.article.trash');
     Route::get('/recycle/{id}',[ArticleController::class,'recycle'])->name('admin.article.recycle');
+    Route::get('/sayfalar',[PageController::class,'index'])->name('admin.sayfalar');
+    Route::get('/sayfalar/ekle',[PageController::class,'create'])->name('admin.sayfalar.ekle');
 
 
     Route::get('/kategoriler',[CategoryController::class,'index'])->name('admin.category.index');

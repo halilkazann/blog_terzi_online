@@ -20,10 +20,6 @@
                     <input type="email" name="admin_email" class="form-control" value="{{$admin->email}}" ></input>
                 </div>
                 <div class="form-group">
-                    <label> Mevcut Şifre</label>
-                    <input type="password" name="admin_pass" class="form-control" value="" autocomplete="off" ></input>
-                </div>
-                <div class="form-group">
                     <label> Yeni Şifre</label>
                     <input type="password" name="admin_newPass" class="form-control" value="" autocomplete="off" ></input>
                 </div>
