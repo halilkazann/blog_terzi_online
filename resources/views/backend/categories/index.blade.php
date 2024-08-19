@@ -59,8 +59,11 @@
                                            title="Kategoriyi Düzenle" data-toggle="modal" data-target="#exampleModal"><i
                                                 class="fa fa-edit text-white"></i> </a>
                                         <a category-id="{{$category->id}}" class="btn btn-sm btn-danger delete-click"
-                                           title="Sil" data-toggle="modal" data-target="#exampleModal2"><i
-                                                class="fa fa-times text-white"></i></a>
+                                           title="Sil" data-toggle="modal" data-target="#exampleModal2">
+                                            <i class="fa fa-times text-white"></i></a>
+                                        <a category-id="{{$category->id}}" class="btn btn-sm btn-info forcedelete-click"
+                                           title="ForceSil" data-toggle="modal" data-target="#exampleModal3">
+                                            <i class="fa-solid fa-filter-circle-xmark"></i></a>
                                     </td>
                                 </tr>
 
@@ -75,71 +78,96 @@
 
     </div>
 
-    <!-- Delete Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal2LabelLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModal2Label">Kategori Sil</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" action="{{route('admin.category.delete')}}">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="form-group">
-                            <span>Kategoriyi silmek istediğine emin misin?</span>
-                            <input id="delete_category_id" type="hidden" class="form-control" name="id">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Kapat</button>
-                        <button type="submit" class="btn btn-danger">Sil</button>
-                    </div>
-                </form>
+<!-- forceDelete Modal -->
+<div class="modal fade" id="forcedeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal3LabelLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal3Label">Kategori Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <form method="post" action="{{route('admin.category.forcedelete')}}">
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-group">
+                        <span>Kategoriyi içeriğinde makale olsa bile silmek istediğine emin misin?</span>
+                        <input id="delete_category_id" type="hidden" class="form-control" name="id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"  class="btn btn-info" data-dismiss="modal">İptal</button>
+                    <button type="submit" name="action" value="fulldata" class="btn btn-info">Kategoriyle - makaleleri sil</button>
+                    <button type="submit" name="action" value="onlycat" class="btn btn-danger">Sadece Kategoriyi Sil</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-
-
-
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Kategori Düzenle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="post" action="{{route('admin.category.update')}}">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="form-group">
-                            <label> Kategori Adı</label>
-                            <input id="category" type="text" class="form-control" name="category">
-                            <input id="category_id" type="hidden" class="form-control" name="id">
-                        </div>
-                        <div class="form-group">
-                            <label>Slug</label>
-                            <input id="slug" type="text" class="form-control" name="slug">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
-                        <button type="submit" class="btn btn-primary">Güncelle</button>
-                    </div>
-                </form>
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal2LabelLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal2Label">Kategori Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <form method="post" action="{{route('admin.category.delete')}}">
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-group">
+                        <span>Kategoriyi silmek istediğine emin misin?</span>
+                        <input id="delete_category_id" type="hidden" class="form-control" name="id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kategori Düzenle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{{route('admin.category.update')}}">
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-group">
+                        <label> Kategori Adı</label>
+                        <input id="category" type="text" class="form-control" name="category">
+                        <input id="category_id" type="hidden" class="form-control" name="id">
+                    </div>
+                    <div class="form-group">
+                        <label>Slug</label>
+                        <input id="slug" type="text" class="form-control" name="slug">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -169,6 +197,12 @@
                 $('#deleteModal').modal('show'); // Modal'ı göster
             });
 
+            $('.forcedelete-click').click(function () {
+                var id = $(this).attr('category-id'); // ID'yi almak için jQuery metodu kullanın
+                $('#delete_category_id').val(id)
+                $('#forcedeleteModal').modal('show'); // Modal'ı göster
+            });
+
             // Switch değişimini işleyin
             $('.switch').change(function () {
                 var id = $(this).attr('category-id');
@@ -184,7 +218,9 @@
         });
 
     </script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 @endsection
 @section('css')
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">

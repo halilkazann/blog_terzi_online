@@ -16,12 +16,14 @@ class AuthController extends Controller
 
     public function loginPost(Request $request)
     {
+
         $email = $request->email;
         $password = $request->password;
 
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            toastr()->success("Hoşgeldin");
+            $user =  Auth::user();
+            flash()->preset('login',['user'=>$user->name]);
             return redirect()->route('admin.panel');
         }
 

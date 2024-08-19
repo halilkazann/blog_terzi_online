@@ -13,6 +13,8 @@ use App\Http\Middleware\isAdmin;
 Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/cikis',[AuthController::class,'logout'])->name('admin.logout');
     Route::get('/panel',[Dashboard::class,'index'])->name('admin.panel');
+    Route::get('/profile',[Dashboard::class,'profile'])->name('admin.profile');
+    Route::post('/profile/update',[Dashboard::class,'profileUpdate'])->name('admin.profile.update');
     Route::resource('/makaleler',ArticleController::class);
     Route::get('/switch',[ArticleController::class,'switch'])->name('admin.switch');
     Route::get('/deletearticle/{id}',[ArticleController::class,'delete'])->name('admin.article.delete');
@@ -25,6 +27,7 @@ Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::post('/kategori/ekle',[CategoryController::class,'create'])->name('admin.category.create');
     Route::post('/kategori/guncelle',[CategoryController::class,'update'])->name('admin.category.update');
     Route::post('/kategori/sil',[CategoryController::class,'delete'])->name('admin.category.delete');
+    Route::post('/kategori/forcesil',[CategoryController::class,'forcedelete'])->name('admin.category.forcedelete');
     Route::get('/kategori/status',[CategoryController::class,'switch'])->name('admin.category.switch');
     Route::get('/kategori/getData',[CategoryController::class,'getData'])->name('admin.category.getdata');
 
