@@ -28,7 +28,7 @@ class Dashboard extends Controller
         $pass = $request->pass;
         $newPass = $request->newPass;
 
-        return "Name:" . $name . "<br>Pass :" . $pass . "<br>NewPass : " . $newPass ;
+        return "Name:" . $name . "<br>Pass :" . $pass . "<br>NewPass : " . $newPass ."halil" ;
 
 
     }
