@@ -31,6 +31,7 @@ class Dashboard extends Controller
         return "Name:" . $name . "<br>Pass :" . $pass . "<br>NewPass : " . $newPass ."halil" ;
 
 
+
     }
 
 
