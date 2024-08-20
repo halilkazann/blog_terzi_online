@@ -70,8 +70,8 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{route('admin.sayfalar')}}">Tüm Sayfalar</a>
-                    <a class="collapse-item" href="{{route('admin.sayfalar.ekle')}}">Sayfa Ekle</a>
+                    <a class="collapse-item" href="{{route('admin.page')}}">Tüm Sayfalar</a>
+                    <a class="collapse-item" href="{{route('admin.page.ekle')}}">Sayfa Ekle</a>
                     <div class="collapse-divider"></div>
                 </div>
             </div>

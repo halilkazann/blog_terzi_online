@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('content');
             $table->string('slug');
             $table->integer('order');
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }

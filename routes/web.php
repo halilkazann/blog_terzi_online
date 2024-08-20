@@ -22,8 +22,9 @@ Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/harddeletearticle/{id}',[ArticleController::class,'hardDelete'])->name('admin.article.harddelete');
     Route::get('/trash',[ArticleController::class,'trash'])->name('admin.article.trash');
     Route::get('/recycle/{id}',[ArticleController::class,'recycle'])->name('admin.article.recycle');
-    Route::get('/sayfalar',[PageController::class,'index'])->name('admin.sayfalar');
-    Route::get('/sayfalar/ekle',[PageController::class,'create'])->name('admin.sayfalar.ekle');
+    Route::get('/sayfalar',[PageController::class,'index'])->name('admin.page');
+    Route::get('/sayfa/status',[PageController::class,'switch'])->name('admin.page.switch');
+    Route::get('/sayfa/ekle',[PageController::class,'create'])->name('admin.page.ekle');
 
 
     Route::get('/kategoriler',[CategoryController::class,'index'])->name('admin.category.index');
@@ -42,10 +43,6 @@ Route::prefix('/admin')->middleware('islogin')->group(function (){
     Route::post('/giris',[AuthController::class,'loginPost'])->name('admin.login.post');
 
 });
-
-
-
-
 
 
 
