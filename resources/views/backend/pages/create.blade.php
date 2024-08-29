@@ -14,7 +14,7 @@
                 </div>
 
             @endif
-            <form method="post" action="" enctype="multipart/form-data">
+            <form method="post" action="{{route('admin.page.createpost')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label> Sayfa Adı</label>
@@ -27,8 +27,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Sıra</label>
+                    <input type="text" name="orderPage" class="form-control" required></input>
+                </div>
+
+                <div class="form-group">
                     <label> Sayfa Fotoğrafı</label>
-                    <input type="file" name="image" class="form-control" required></input>
+                    <input type="file" name="image" class="form-control" ></input>
                 </div>
 
                 <div class="form-group">

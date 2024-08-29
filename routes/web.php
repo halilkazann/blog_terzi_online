@@ -24,7 +24,9 @@ Route::prefix('/admin')->middleware('isadmin')->group(function (){
     Route::get('/recycle/{id}',[ArticleController::class,'recycle'])->name('admin.article.recycle');
     Route::get('/sayfalar',[PageController::class,'index'])->name('admin.page');
     Route::get('/sayfa/status',[PageController::class,'switch'])->name('admin.page.switch');
-    Route::get('/sayfa/ekle',[PageController::class,'create'])->name('admin.page.ekle');
+    Route::get('/sayfa/getData',[PageController::class,'getData'])->name('admin.page.getdata');
+    Route::get('/sayfa/ekle',[PageController::class,'create'])->name('admin.page.create');
+    Route::post('/sayfa/ekle',[PageController::class,'create'])->name('admin.page.createpost');
 
 
     Route::get('/kategoriler',[CategoryController::class,'index'])->name('admin.category.index');

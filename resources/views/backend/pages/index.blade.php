@@ -21,7 +21,7 @@
                     <tbody>
                         @foreach($pages as $page)
                             <tr>
-                                <td><img src="{{$page->image}}" width="150"></td>
+                                <td><img src="{{asset($page->image)}}" width="150"></td>
                                 <td>{{$page->title}}</td>
                                 <td>{{$page->content}}</td>
                                 <td>{{$page->slug}}</td>
@@ -50,19 +50,34 @@
 
 @endsection
 @section('js')
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <script>
         $(function() {
             $('.switch').change(function() {
-                id = $(this)[0].attr('page-id');
-                statu = $(this).prop('checked');
-                $.get("{{route('admin.page.switch')}}",{id:id,statu:statu}, function (data,status){
-                    console.log(status);
-                })
-            })
-        })
+                var id = $(this).attr('page-id'); // ID'yi burada tanımlayın
+                var statu = $(this).prop('checked');
+
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ route('admin.page.getdata') }}',
+                    data: { id: id },
+                    success: function(response) {
+                        console.log('GetData yanıtı:', response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('GetData hatası:', error);
+                    }
+                });
+
+                $.get("{{ route('admin.page.switch') }}", { id: id, statu: statu }, function(data, status) {
+                    console.log('Switch yanıtı:', data);
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error('Switch hatası:', textStatus, errorThrown);
+                });
+            });
+        });
 
         $('#dataTable').dataTable();
+
     </script>
 
 @endsection
